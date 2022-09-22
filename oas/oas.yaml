@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  title: Api de integración stores 
+  description: Api de integración stores
+  version: "1.0.0"
+  contact:
+    name: Célula Saturno
+    email: daniel.parada@2brains.cl
+servers:
+  - url: http://localhost:3000
+    description: Local Enviroment
+  - url: https://devapigw.bluex.cl
+    description: Develop Enviroment
+tags:
+  - name: store
+    description: Integración de stores
+  - name: tracking
+    description: Integración de stores
+paths:
+    /stores/{clientEmail}:
+        parameters:
+            - name: clientEmail
+              description: email of client
+              in: path
+              required: true
+              schema:
+                  $ref: "#/components/schemas/clientEmail"
+        get:
+            summary: Read stores
+            responses:
+                "200":
+                    description: The stores corresponding to the provided `clientEmail`
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/store"
+                404:
+                    description: No stores found for the provided `clientEmail`
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /stores/{clientEmail}/{storeId}:
+        parameters:
+            - name: clientEmail
+              description: email of client
+              in: path
+              required: true
+              schema:
+                  $ref: "#/components/schemas/clientEmail"
+            - name: storeId
+              description: The unique identifier of the store
+              in: path
+              required: true
+              schema:
+                  $ref: "#/components/schemas/storeId"
+        get:
+            summary: Read a store
+            responses:
+                "200":
+                    description: The store corresponding to the provided `clientEmail`
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/store"
+                404:
+                    description: No order found for the provided `clientEmail`
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+components:
+    schemas:
+        clientEmail:
+            description: The unique identifier of a client
+            type: string
+        storeId:
+            description: The unique identifier of a store
+            type: string
+        store:
+            type: object
+            required:
+                - id
+            properties:
+                id:
+                    type: number
+                name:
+                    type: string
+                type:
+                    type: string
+                key:
+                    type: string
+                token:
+                    type: string
+                accountName:
+                    type: string
+                environment:
+                    type: string
+                bx_token:
+                    type: string
+                bx_user_code:
+                    type: string
+                bx_client_account:
+                    type: string
+                user_id:
+                    type: string
+                created_at:
+                    type: string
+                updated_at:
+                    type: string
+                district_id:
+                    type: string
+                bx_user_name:
+                    type: string
+                serviceExpress:
+                    type: string
+                servicePriority:
+                    type: string
+                servicePremium:
+                    type: string
+                serviceSameday:
+                    type: string
+                productCategory:
+                    type: string
+                productType:
+                    type: string
+                street:
+                    type: string
+                number:
+                    type: string
+                responsableFullName:
+                    type: string
+                responsableRut:
+                    type: string
+                responsableDv:
+                    type: string
+                responsablePrefixPhone:
+                    type: string
+                responsablePhone:
+                    type: string
+                responsableEmail:
+                    type: string
+                dockVtex:
+                    type: string
+                statusVtex:
+                    type: string
+                postalCode:
+                    type: string
+        Error:
+            type: object
+            required:
+                - message
+            properties:
+                message:
+                    description: A human readable error message
+                    type: string

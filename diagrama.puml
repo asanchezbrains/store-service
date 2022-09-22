@@ -1,0 +1,13 @@
+@startuml
+autonumber "<b>[00]"
+actor cliente
+participant Servicio
+database mysql
+
+== Store Service ==
+cliente -> Servicio : consulta tiendas configuradas de un correo dado
+note right
+    <size: 9>https://devapigw.bluex.cl//api/integrations/stores/v1/correo@correo.com/
+end note
+Servicio -> mysql : busca tiendas y detalles segun filtros
+@enduml
